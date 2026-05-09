@@ -225,13 +225,15 @@ function renderLoading() {
   const total = urls.length
   app.innerHTML = `
     <div class="loading-screen">
-      <h2 class="loading-title">正在加载题目，请做好准备 👀</h2>
+      
       <div class="loading-bar-outer">
         <div class="loading-bar-inner" id="load-bar-inner" style="width: 0%"></div>
       </div>
-      <p class="loading-count" id="load-count">0 / ${total}</p>
+      
     </div>
   `
+  // <h2 class="loading-title">正在加载题目，请做好准备 👀</h2>
+  // <p class="loading-count" id="load-count">0 / ${total}</p>
 
   const bar = () => document.getElementById('load-bar-inner')
   const cnt = () => document.getElementById('load-count')
