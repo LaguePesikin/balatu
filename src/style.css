@@ -112,6 +112,51 @@ body {
   color: #6b7280;
 }
 
+/* —— 预加载 —— */
+.loading-screen {
+  text-align: center;
+  padding-top: 2.5rem;
+}
+
+.loading-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.loading-desc {
+  margin: 1rem 0 1.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.loading-desc strong {
+  color: #e5e7eb;
+}
+
+.loading-bar-outer {
+  height: 10px;
+  border-radius: 999px;
+  background: #374151;
+  overflow: hidden;
+}
+
+.loading-bar-inner {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  transition: width 0.2s ease-out;
+}
+
+.loading-count {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #d1d5db;
+  font-variant-numeric: tabular-nums;
+}
+
 /* —— 海报页 —— */
 .poster-page {
   text-align: center;
@@ -283,6 +328,10 @@ body {
   flex-direction: column;
   background: rgba(0, 0, 0, 0.92);
   padding-bottom: env(safe-area-inset-bottom);
+}
+
+.preview-mask.preview-hidden {
+  display: none;
 }
 
 .preview-stage {

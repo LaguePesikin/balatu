@@ -2,7 +2,7 @@ import './style.css'
 import { buildQuestionRound, type Question } from './questionRound'
 import { drawPoster, type PosterPayload } from './poster'
 
-type Phase = 'landing' | 'playing' | 'poster'
+type Phase = 'landing' | 'loading' | 'playing' | 'poster'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
@@ -31,6 +31,17 @@ const state: {
   posterPayload: null,
 }
 
+/** 游戏 DOM 只挂载一次，避免整页 innerHTML 导致图片反复卸载/闪烁 */
+let gameDom: {
+  progressEl: HTMLElement
+  imgs: HTMLImageElement[]
+  frames: HTMLElement[]
+  choices: HTMLButtonElement[]
+  btnNext: HTMLButtonElement
+} | null = null
+
+let previewLayer: HTMLDivElement | null = null
+
 function explain(err: string): string {
   if (err === 'TRUE_POOL_SMALL') return 'true 图数量不足：至少需要 true-1～true-10 放在 images 目录。'
   if (err === 'FALSE_POOL_EMPTY') return '未找到 false 图：请将 false-x.jpeg 放入 images 目录。'
@@ -38,19 +49,117 @@ function explain(err: string): string {
   return '题目加载失败。'
 }
 
+function collectUniqueImageUrls(questions: Question[]): string[] {
+  const set = new Set<string>()
+  for (const q of questions) {
+    for (const u of q.images) {
+      set.add(u)
+    }
+  }
+  return [...set]
+}
+
+function preloadImages(urls: string[], onProgress: (done: number, total: number) => void): Promise<void> {
+  const total = urls.length
+  if (total === 0) {
+    onProgress(0, 0)
+    return Promise.resolve()
+  }
+
+  let done = 0
+  const bump = () => {
+    done += 1
+    onProgress(done, total)
+  }
+
+  return Promise.all(
+    urls.map(
+      (url) =>
+        new Promise<void>((resolve) => {
+          const im = new Image()
+          im.decoding = 'async'
+          const fin = () => {
+            bump()
+            resolve()
+          }
+          im.onload = fin
+          im.onerror = fin
+          im.src = url
+        })
+    )
+  ).then(() => {})
+}
+
+function teardownGame() {
+  gameDom = null
+  removePreviewLayer()
+}
+
+function removePreviewLayer() {
+  if (previewLayer) {
+    previewLayer.remove()
+    previewLayer = null
+  }
+  state.previewSrc = null
+}
+
+function ensurePreviewLayer(): HTMLDivElement {
+  if (previewLayer) return previewLayer
+  const el = document.createElement('div')
+  el.className = 'preview-mask preview-hidden'
+  el.id = 'game-preview-mask'
+  el.innerHTML = `
+    <div class="preview-stage" id="game-preview-stage">
+      <img class="preview-img" id="game-preview-img" alt="" />
+    </div>
+    <div class="preview-tip">点击画面关闭</div>
+  `
+  const close = () => {
+    el.classList.add('preview-hidden')
+    state.previewSrc = null
+  }
+  el.addEventListener('click', close)
+  el.querySelector('#game-preview-stage')!.addEventListener('click', (e) => {
+    e.stopPropagation()
+    close()
+  })
+  document.body.appendChild(el)
+  previewLayer = el
+  return el
+}
+
+function openPreview(src: string) {
+  state.previewSrc = src
+  const layer = ensurePreviewLayer()
+  const img = layer.querySelector('#game-preview-img') as HTMLImageElement
+  img.src = src
+  layer.classList.remove('preview-hidden')
+}
+
 function render() {
   if (state.phase === 'landing') {
+    teardownGame()
     renderLanding()
     return
   }
+  if (state.phase === 'loading') {
+    renderLoading()
+    return
+  }
   if (state.phase === 'poster') {
+    teardownGame()
     renderPosterView()
     return
   }
-  renderGameShell()
+  // playing — 首帧由 preload 结束时 mountPlayingUI 负责
+  if (!gameDom) {
+    mountPlayingUI()
+  }
+  updatePlayingUI()
 }
 
 function renderLanding() {
+  removePreviewLayer()
   app.innerHTML = `
     <div class="landing">
       <h1>扒拉图 🔍</h1>
@@ -91,45 +200,83 @@ function renderLanding() {
       alert(explain(round.error))
       return
     }
-    state.phase = 'playing'
     state.questions = round.questions
     state.currentIndex = 0
     state.selectedChoice = null
     state.correctCount = 0
-    state.startTime = Date.now()
     state.previewSrc = null
+    state.phase = 'loading'
     render()
   }
+}
+
+function renderLoading() {
+  const urls = collectUniqueImageUrls(state.questions)
+  const total = urls.length
+  app.innerHTML = `
+    <div class="loading-screen">
+      <h2 class="loading-title">正在加载本局题目</h2>
+      <p class="loading-desc">
+        预先加载本局全部图片（共 <strong>${total}</strong> 张，去重后），完成后才会开始计时，避免网络影响成绩。
+      </p>
+      <div class="loading-bar-outer">
+        <div class="loading-bar-inner" id="load-bar-inner" style="width: 0%"></div>
+      </div>
+      <p class="loading-count" id="load-count">0 / ${total}</p>
+    </div>
+  `
+
+  const bar = () => document.getElementById('load-bar-inner')
+  const cnt = () => document.getElementById('load-count')
+
+  preloadImages(urls, (done, t) => {
+    const b = bar()
+    const c = cnt()
+    if (!b || !c) return
+    const pct = t === 0 ? 100 : Math.min(100, Math.round((done / t) * 100))
+    b.style.width = `${pct}%`
+    c.textContent = `${done} / ${t}`
+  })
+    .then(() => {
+      state.startTime = Date.now()
+      state.phase = 'playing'
+      gameDom = null
+      mountPlayingUI()
+      updatePlayingUI()
+    })
+    .catch(() => {
+      alert('图片加载异常，请刷新重试')
+      state.phase = 'landing'
+      state.questions = []
+      render()
+    })
 }
 
 function currentQuestion(): Question {
   return state.questions[state.currentIndex]
 }
 
-function renderGameShell() {
-  const q = currentQuestion()
-  const labels = ['A', 'B', 'C', 'D']
-  const previewOpen = state.previewSrc !== null
-
+function mountPlayingUI() {
+  removePreviewLayer()
   app.innerHTML = `
-    <div class="game-root">
+    <div class="game-root" id="game-root">
       <div class="game-top">
-        <span>第 ${state.currentIndex + 1} / ${state.questions.length} 题</span>
+        <span id="game-progress">第 1 / 10 题</span>
       </div>
       <div class="game-title">哪张照片是真实拍摄的？</div>
       <div class="game-hint">点击图片可放大查看</div>
       <div class="grid">
-        ${q.images
+        ${[0, 1, 2, 3]
           .map(
-            (src, i) => `
-          <div class="grid-cell">
-            <div class="pic-frame ${state.selectedChoice === i ? 'selected' : ''}">
-              <div class="pic-crop">
-                <img class="pic" src="${src}" alt="${labels[i]}" data-preview-index="${i}" loading="lazy" />
-              </div>
+            (i) => `
+        <div class="grid-cell">
+          <div class="pic-frame" data-frame="${i}">
+            <div class="pic-crop">
+              <img class="pic" id="game-pic-${i}" alt="" data-preview-index="${i}" />
             </div>
-            <span class="pic-label">${labels[i]}</span>
-          </div>`
+          </div>
+          <span class="pic-label">${['A', 'B', 'C', 'D'][i]}</span>
+        </div>`
           )
           .join('')}
       </div>
@@ -137,55 +284,67 @@ function renderGameShell() {
         ${[0, 1, 2, 3]
           .map(
             (i) => `
-          <button type="button" class="choice-btn ${state.selectedChoice === i ? 'active' : ''}" data-choice="${i}">${labels[i]}</button>`
+        <button type="button" class="choice-btn" data-choice="${i}">${['A', 'B', 'C', 'D'][i]}</button>`
           )
           .join('')}
       </div>
-      <button type="button" class="next-btn" id="btn-next" ${state.selectedChoice === null ? 'disabled' : ''}>下一题</button>
+      <button type="button" class="next-btn" id="btn-next" disabled>下一题</button>
     </div>
-    ${
-      previewOpen
-        ? `
-    <div class="preview-mask" id="preview-mask" role="dialog">
-      <div class="preview-stage" id="preview-stage">
-        <img class="preview-img" src="${state.previewSrc}" alt="" />
-      </div>
-      <div class="preview-tip">点击画面关闭</div>
-    </div>`
-        : ''
-    }
   `
 
-  app.querySelectorAll('.pic').forEach((img) => {
-    img.addEventListener('click', (e) => {
-      const i = Number((e.currentTarget as HTMLElement).dataset.previewIndex)
-      state.previewSrc = q.images[i]
-      renderGameShell()
+  const imgs = [0, 1, 2, 3].map((i) => document.getElementById(`game-pic-${i}`) as HTMLImageElement)
+  const frames = [0, 1, 2, 3].map(
+    (i) => document.querySelector(`[data-frame="${i}"]`) as HTMLElement
+  )
+  const choices = [...document.querySelectorAll('[data-choice]')] as HTMLButtonElement[]
+  const btnNext = document.getElementById('btn-next') as HTMLButtonElement
+  const progressEl = document.getElementById('game-progress') as HTMLElement
+
+  gameDom = { progressEl, imgs, frames, choices, btnNext }
+
+  imgs.forEach((img) => {
+    img.addEventListener('click', () => {
+      const i = Number(img.dataset.previewIndex)
+      openPreview(currentQuestion().images[i])
     })
   })
 
-  app.querySelectorAll('[data-choice]').forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      state.selectedChoice = Number((e.currentTarget as HTMLElement).dataset.choice)
-      renderGameShell()
+  choices.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.selectedChoice = Number(btn.dataset.choice)
+      updateSelectionOnly()
     })
   })
 
-  document.getElementById('btn-next')!.onclick = () => goNext()
+  btnNext.addEventListener('click', () => goNext())
+}
 
-  if (previewOpen) {
-    const mask = document.getElementById('preview-mask')!
-    const stage = document.getElementById('preview-stage')!
-    const close = () => {
-      state.previewSrc = null
-      renderGameShell()
+function updateSelectionOnly() {
+  if (!gameDom) return
+  const sel = state.selectedChoice
+  gameDom.frames.forEach((fr, i) => {
+    fr.classList.toggle('selected', sel === i)
+  })
+  gameDom.choices.forEach((btn, i) => {
+    btn.classList.toggle('active', sel === i)
+  })
+  gameDom.btnNext.disabled = sel === null
+}
+
+function updatePlayingUI() {
+  if (!gameDom) return
+  const q = currentQuestion()
+  const n = state.questions.length
+  gameDom.progressEl.textContent = `第 ${state.currentIndex + 1} / ${n} 题`
+
+  gameDom.imgs.forEach((img, i) => {
+    const nextSrc = q.images[i]
+    if (img.getAttribute('src') !== nextSrc) {
+      img.src = nextSrc
     }
-    mask.addEventListener('click', close)
-    stage.addEventListener('click', (e) => {
-      e.stopPropagation()
-      close()
-    })
-  }
+  })
+
+  updateSelectionOnly()
 }
 
 function goNext() {
@@ -203,7 +362,7 @@ function goNext() {
 
   state.currentIndex = next
   state.selectedChoice = null
-  renderGameShell()
+  updatePlayingUI()
 }
 
 function finishChallenge() {
