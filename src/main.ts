@@ -1,6 +1,7 @@
 import './style.css'
 import { buildQuestionRound, type Question } from './questionRound'
 import { drawPoster, type PosterPayload } from './poster'
+import { generateRandomNick } from './randomNick'
 
 type Phase = 'landing' | 'loading' | 'playing' | 'poster'
 
@@ -165,13 +166,16 @@ function renderLanding() {
       <h1>扒拉图 🔍</h1>
       <p class="sub">测试你分辨 AI 生成图片的能力</p>
       <label class="nick-label" for="nick-input">昵称</label>
-      <input
-        id="nick-input"
-        class="nick-field"
-        type="text"
-        maxlength="20"
-        placeholder="填写昵称"
-      />
+      <div class="nick-input-wrap">
+        <input
+          id="nick-input"
+          class="nick-field nick-field-grow"
+          type="text"
+          maxlength="20"
+          placeholder="填写昵称"
+        />
+        <button type="button" class="dice-btn" id="btn-dice-nick" title="随机昵称">🎲</button>
+      </div>
       <div class="rules">
         <p>总共 <strong>10</strong> 题，每题四张照片，其中仅有一张是真实拍摄</p>
         <p>其余三张为 AI 生成的</p>
@@ -187,6 +191,12 @@ function renderLanding() {
   input.addEventListener('input', () => {
     state.nickName = input.value.trim()
   })
+
+  document.getElementById('btn-dice-nick')!.onclick = () => {
+    const nick = generateRandomNick(20)
+    state.nickName = nick
+    input.value = nick
+  }
 
   document.getElementById('btn-start')!.onclick = () => {
     const nick = (input.value || '').trim()
