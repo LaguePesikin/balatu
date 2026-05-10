@@ -249,6 +249,7 @@ function renderLanding() {
       </div>
       <div class="footer-links">
         <a class="footer-link" href="#" id="link-tech">了解更多生图模型的技术细节</a>
+        <p class="footer-contact-lead">如果想要接触好玩的开源项目，可以</p>
         <button type="button" class="footer-link footer-link-btn" id="btn-open-contact">联系作者</button>
       </div>
     </div>
