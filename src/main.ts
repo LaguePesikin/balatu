@@ -351,7 +351,7 @@ function renderLoading() {
   const total = urls.length
   app.innerHTML = `
     <div class="loading-screen">
-      <h2 class="loading-title">加载中</h2>
+      <h2 class="loading-title">加载题目中，请稍候</h2>
       <div class="loading-bar-outer">
         <div class="loading-bar-inner" id="load-bar-inner" style="width: 0%"></div>
       </div>
