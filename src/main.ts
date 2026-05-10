@@ -236,7 +236,7 @@ function renderLanding() {
   app.innerHTML = `
     <div class="landing">
       <h1>扒拉图 🔍</h1>
-      <p class="sub">测试你分辨 AI 生成图片的能力</p>
+      <p class="sub">测测你分辨 AI 生成图片的能力</p>
       <label class="nick-label" for="nick-input">昵称</label>
       <div class="nick-input-wrap">
         <input
@@ -252,7 +252,7 @@ function renderLanding() {
         <p>总共 <strong>10</strong> 题，每题四张照片，其中仅有一张是真实拍摄</p>
         <p>其余三张为 AI 生成的</p>
         <p>你的目标是找出唯一真实的那张</p>
-        <p>答题不限时；结束后生成正确率和耗时结果</p>
+        <p>答题不限时；结束后可生成正确率和耗时结果</p>
         <p>欢迎分享链接给朋友们一起玩</p>
       </div>
       <button type="button" class="btn-daily-challenge" id="btn-daily-challenge">每日挑战 ⏳</button>
@@ -263,7 +263,8 @@ function renderLanding() {
         <button type="button" class="diff-btn diff-hell" data-difficulty="hell">难度: 地狱 😈</button>
       </div>
       <div class="footer-links">
-        <a class="footer-link" href="#" id="link-tech">了解更多生图模型的技术细节</a>
+        <span class="footer-contact-lead">想知道图像生成模型的工作原理？</span>
+        <a class="footer-link" href="#" id="link-tech">点击这里</a>
         <div class="footer-contact-inline">
           <span class="footer-contact-lead">如果想要接触好玩的开源项目，可以</span>
           <button type="button" class="footer-link footer-link-btn" id="btn-open-contact">联系作者</button>
@@ -288,7 +289,7 @@ function renderLanding() {
     </div>
     <div class="daily-tip-overlay hidden" id="daily-tip-overlay">
       <div class="daily-tip-panel" id="daily-tip-panel-inner">
-        <p class="daily-tip-text">每日挑战暂未开放，稍等一哈</p>
+        <p class="daily-tip-text">每日挑战暂未开放，请稍等一哈</p>
         <button type="button" class="daily-tip-close" id="btn-daily-tip-close">好的</button>
       </div>
     </div>

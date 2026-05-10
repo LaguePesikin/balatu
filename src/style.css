@@ -220,6 +220,22 @@ body {
   margin-top: 0;
 }
 
+/* 页脚第一行：说明文字 + 「点击这里」同一行 */
+.footer-links > .footer-contact-lead:first-child {
+  display: inline;
+  color: #d1d5db;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin-right: 0.2rem;
+}
+
+.footer-links > a.footer-link#link-tech {
+  display: inline;
+  margin-top: 0;
+  width: auto;
+  vertical-align: baseline;
+}
+
 .footer-contact-inline {
   display: flex;
   flex-direction: row;
