@@ -11,8 +11,7 @@ const POSTER_W = 375
 const POSTER_H = 720
 
 const WECHAT_ID = 'TheKinginYellow09'
-const FEISHU_INVITE =
-  'https://www.feishu.cn/invitation/page/add_contact/?token=e97s5235-d72a-4561-a4e1-525fe84d5cee'
+const FEISHU_QR_SRC = `${import.meta.env.BASE_URL}feishu-qrcode.png`
 
 const DIFF_LABEL: Record<GameDifficulty, string> = {
   easy: '简单',
@@ -216,14 +215,6 @@ function bindContactModal() {
       prompt('请手动复制微信号：', WECHAT_ID)
     }
   })
-  document.getElementById('copy-feishu')?.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(FEISHU_INVITE)
-      alert('已复制飞书邀请链接')
-    } catch {
-      prompt('请手动复制链接：', FEISHU_INVITE)
-    }
-  })
 }
 
 function renderLanding() {
@@ -248,10 +239,10 @@ function renderLanding() {
         <p>点击难度后开始预加载本局全部图片，加载完成才计时。</p>
       </div>
       <div class="diff-wrap">
-        <button type="button" class="diff-btn diff-easy" data-difficulty="easy">难度：简单 😆</button>
-        <button type="button" class="diff-btn diff-medium" data-difficulty="medium">难度：中等 🤨</button>
-        <button type="button" class="diff-btn diff-hard" data-difficulty="hard">难度：困难 🤯</button>
-        <button type="button" class="diff-btn diff-hell" data-difficulty="hell">难度：地狱 😈</button>
+        <button type="button" class="diff-btn diff-easy" data-difficulty="easy">难度: 简单 😆</button>
+        <button type="button" class="diff-btn diff-medium" data-difficulty="medium">难度: 中等 🤨</button>
+        <button type="button" class="diff-btn diff-hard" data-difficulty="hard">难度: 困难 🤯</button>
+        <button type="button" class="diff-btn diff-hell" data-difficulty="hell">难度: 地狱 😈</button>
       </div>
       <div class="footer-links">
         <a class="footer-link" href="#" id="link-tech">如果你想了解关于模型生成图片的技术细节……</a>
@@ -266,10 +257,10 @@ function renderLanding() {
           <span class="contact-value">${WECHAT_ID}</span>
           <span class="contact-tip">（点击复制）</span>
         </button>
-        <button type="button" class="contact-row contact-row-btn" id="copy-feishu">
+        <div class="contact-row contact-feishu-block">
           <span class="contact-label">飞书：</span>
-          <span class="contact-feishu">点击这里复制邀请链接</span>
-        </button>
+          <img class="contact-feishu-qr" src="${FEISHU_QR_SRC}" alt="飞书二维码" />
+        </div>
         <button type="button" class="contact-close" id="btn-contact-close">关闭</button>
       </div>
     </div>
