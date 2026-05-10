@@ -235,8 +235,11 @@ function renderLanding() {
         <button type="button" class="dice-btn" id="btn-dice-nick" title="随机昵称">🎲</button>
       </div>
       <div class="rules">
-        <p>每题四张照片，仅一张为真实拍摄；题量随难度变化（简单 5 题 / 中等 8 题 / 困难与地狱各 10 题）。</p>
-        <p>点击难度后开始预加载本局全部图片，加载完成才计时。</p>
+        <p>总共 <strong>10</strong> 题，每题四张照片，其中仅有一张是真实拍摄</p>
+        <p>其余三张为 AI 生成的</p>
+        <p>你的目标是找出唯一真实的那张</p>
+        <p>答题不限时；结束后生成正确率和耗时结果</p>
+        <p>欢迎分享链接给朋友们一起玩</p>
       </div>
       <div class="diff-wrap">
         <button type="button" class="diff-btn diff-easy" data-difficulty="easy">难度: 简单 😆</button>
