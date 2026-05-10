@@ -254,13 +254,18 @@ function renderLanding() {
         <p>你的目标是找出唯一真实的那张</p>
         <p>答题不限时；结束后可生成正确率和耗时结果</p>
         <p>欢迎分享链接给朋友们一起玩</p>
+        <p>（不同难度的题目，使用不同的生图模型和提示词配置）</p>
       </div>
       <button type="button" class="btn-daily-challenge" id="btn-daily-challenge">每日挑战 ⏳</button>
-      <div class="diff-wrap">
-        <button type="button" class="diff-btn diff-easy" data-difficulty="easy">难度: 简单 😆</button>
-        <button type="button" class="diff-btn diff-medium" data-difficulty="medium">难度: 中等 🤨</button>
-        <button type="button" class="diff-btn diff-hard" data-difficulty="hard">难度: 困难 🤯</button>
-        <button type="button" class="diff-btn diff-hell" data-difficulty="hell">难度: 地狱 😈</button>
+      <div class="start-game-row">
+        <label class="sr-only" for="difficulty-select">选择难度</label>
+        <select id="difficulty-select" class="difficulty-select" aria-label="选择难度">
+          <option value="easy" ${state.difficulty === 'easy' ? 'selected' : ''}>难度: 简单 😆</option>
+          <option value="medium" ${state.difficulty === 'medium' ? 'selected' : ''}>难度: 中等 🤨</option>
+          <option value="hard" ${state.difficulty === 'hard' ? 'selected' : ''}>难度: 困难 🤯</option>
+          <option value="hell" ${state.difficulty === 'hell' ? 'selected' : ''}>难度: 地狱 😈</option>
+        </select>
+        <button type="button" class="btn-start-game" id="btn-start-game">开始游戏</button>
       </div>
       <div class="footer-links">
         <span class="footer-contact-lead">想知道图像生成模型的工作原理？</span>
@@ -307,11 +312,12 @@ function renderLanding() {
     input.value = nick
   }
 
-  document.querySelectorAll('.diff-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const d = (btn as HTMLElement).dataset.difficulty as GameDifficulty
-      startWithDifficulty(d)
-    })
+  const diffSelect = document.getElementById('difficulty-select') as HTMLSelectElement
+  diffSelect.addEventListener('change', () => {
+    state.difficulty = diffSelect.value as GameDifficulty
+  })
+  document.getElementById('btn-start-game')!.addEventListener('click', () => {
+    startWithDifficulty(diffSelect.value as GameDifficulty)
   })
 
   document.getElementById('link-tech')!.addEventListener('click', (e) => {
