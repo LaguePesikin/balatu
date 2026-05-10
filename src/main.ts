@@ -193,6 +193,20 @@ function renderTechPage() {
   }
 }
 
+function bindDailyChallengeModal() {
+  const overlay = document.getElementById('daily-tip-overlay')
+  if (!overlay) return
+  const close = () => overlay.classList.add('hidden')
+  document.getElementById('daily-tip-panel-inner')?.addEventListener('click', (e) => {
+    e.stopPropagation()
+  })
+  overlay.addEventListener('click', close)
+  document.getElementById('btn-daily-tip-close')?.addEventListener('click', close)
+  document.getElementById('btn-daily-challenge')?.addEventListener('click', () => {
+    overlay.classList.remove('hidden')
+  })
+}
+
 function bindContactModal() {
   const overlay = document.getElementById('contact-overlay')
   if (!overlay) return
@@ -241,6 +255,7 @@ function renderLanding() {
         <p>答题不限时；结束后生成正确率和耗时结果</p>
         <p>欢迎分享链接给朋友们一起玩</p>
       </div>
+      <button type="button" class="btn-daily-challenge" id="btn-daily-challenge">每日挑战 ⏳</button>
       <div class="diff-wrap">
         <button type="button" class="diff-btn diff-easy" data-difficulty="easy">难度: 简单 😆</button>
         <button type="button" class="diff-btn diff-medium" data-difficulty="medium">难度: 中等 🤨</button>
@@ -268,6 +283,12 @@ function renderLanding() {
           <img class="contact-feishu-qr" src="${FEISHU_QR_SRC}" alt="飞书二维码" />
         </div>
         <button type="button" class="contact-close" id="btn-contact-close">关闭</button>
+      </div>
+    </div>
+    <div class="daily-tip-overlay hidden" id="daily-tip-overlay">
+      <div class="daily-tip-panel" id="daily-tip-panel-inner">
+        <p class="daily-tip-text">每日挑战暂未开放，稍等一哈</p>
+        <button type="button" class="daily-tip-close" id="btn-daily-tip-close">好的</button>
       </div>
     </div>
   `
@@ -298,6 +319,7 @@ function renderLanding() {
   })
 
   bindContactModal()
+  bindDailyChallengeModal()
 }
 
 function startWithDifficulty(difficulty: GameDifficulty) {
