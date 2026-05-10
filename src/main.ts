@@ -34,7 +34,7 @@ const state: {
 } = {
   phase: 'landing',
   nickName: '',
-  difficulty: 'hard',
+  difficulty: 'easy',
   questions: [],
   currentIndex: 0,
   selectedChoice: null,
