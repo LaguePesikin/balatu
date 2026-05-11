@@ -209,6 +209,20 @@ function bindDailyChallengeModal() {
   })
 }
 
+function bindRankBoardModal() {
+  const overlay = document.getElementById('rank-tip-overlay')
+  if (!overlay) return
+  const close = () => overlay.classList.add('hidden')
+  document.getElementById('rank-tip-panel-inner')?.addEventListener('click', (e) => {
+    e.stopPropagation()
+  })
+  overlay.addEventListener('click', close)
+  document.getElementById('btn-rank-tip-close')?.addEventListener('click', close)
+  document.getElementById('btn-rank-board')?.addEventListener('click', () => {
+    overlay.classList.remove('hidden')
+  })
+}
+
 function bindContactModal() {
   const overlay = document.getElementById('contact-overlay')
   if (!overlay) return
@@ -341,6 +355,7 @@ function renderLanding() {
         <p>（不同难度的题目，使用不同的生图模型和提示词配置）</p>
       </div>
       <button type="button" class="btn-daily-challenge" id="btn-daily-challenge">每日挑战 ⏳</button>
+      <button type="button" class="btn-rank-board" id="btn-rank-board">排行榜 🏆</button>
       <div class="start-game-row">
         <label class="sr-only" for="difficulty-select">选择难度</label>
         <select id="difficulty-select" class="difficulty-select" aria-label="选择难度">
@@ -358,6 +373,12 @@ function renderLanding() {
       <div class="daily-tip-panel" id="daily-tip-panel-inner">
         <p class="daily-tip-text">每日挑战暂未开放，请稍等一哈</p>
         <button type="button" class="daily-tip-close" id="btn-daily-tip-close">好的</button>
+      </div>
+    </div>
+    <div class="daily-tip-overlay hidden" id="rank-tip-overlay">
+      <div class="daily-tip-panel" id="rank-tip-panel-inner">
+        <p class="daily-tip-text">排行榜暂未开放，请稍等一哈</p>
+        <button type="button" class="daily-tip-close" id="btn-rank-tip-close">好的</button>
       </div>
     </div>
   `
@@ -384,6 +405,7 @@ function renderLanding() {
 
   bindContactModal()
   bindDailyChallengeModal()
+  bindRankBoardModal()
 }
 
 function startWithDifficulty(difficulty: GameDifficulty) {
@@ -621,7 +643,7 @@ function renderResultView() {
   app.innerHTML = `
     <div class="result-page">
       <h2 class="result-title">最终成绩 🤔</h2>
-      <p class="result-nick">${data.nickName}<span class="result-nick-label">（昵称）</span></p>
+      <p class="result-nick">${data.nickName}<span class="result-nick-label"></span></p>
       <p class="result-score">得分：<strong>${data.finalScore.toFixed(2)}</strong></p>
       <p class="result-line">正确率：<strong>${data.correctCount}/${data.totalCount}</strong></p>
       <p class="result-line">总耗时：<strong>${data.elapsedSec}</strong> 秒</p>
