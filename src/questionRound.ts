@@ -24,7 +24,7 @@ export type GameDifficulty = 'easy' | 'medium' | 'hard' | 'hell'
 
 export const GAME_CONFIG = {
   TRUE_IMAGE_MAX_INDEX: 10,
-  FALSE_IMAGE_MAX_INDEX: 30,
+  FALSE_IMAGE_MAX_INDEX: 158,
 }
 
 const QUESTIONS_PER_ROUND: Record<GameDifficulty, number> = {
