@@ -1,14 +1,25 @@
 import './style.css'
 import { buildQuestionRound, type Question, type GameDifficulty } from './questionRound'
-import { drawPoster, type PosterPayload } from './poster'
 import { generateRandomNick } from './randomNick'
 
-type Phase = 'landing' | 'loading' | 'playing' | 'poster'
+type Phase = 'landing' | 'loading' | 'playing' | 'result'
+
+type AnswerRecord = {
+  images: string[]
+  answerIndex: number
+  selectedChoice: number
+  isCorrect: boolean
+}
+
+type ResultPayload = {
+  nickName: string
+  correctCount: number
+  totalCount: number
+  elapsedSec: string
+  wrongQuestions: AnswerRecord[]
+}
 
 const app = document.querySelector<HTMLDivElement>('#app')!
-
-const POSTER_W = 375
-const POSTER_H = 720
 
 const WECHAT_ID = 'TheKinginYellow09'
 const FEISHU_QR_SRC = `${import.meta.env.BASE_URL}feishu-qrcode.png`
@@ -32,7 +43,8 @@ const state: {
   correctCount: number
   startTime: number
   previewSrc: string | null
-  posterPayload: PosterPayload | null
+  answerRecords: AnswerRecord[]
+  resultPayload: ResultPayload | null
 } = {
   phase: 'landing',
   nickName: '',
@@ -43,7 +55,8 @@ const state: {
   correctCount: 0,
   startTime: 0,
   previewSrc: null,
-  posterPayload: null,
+  answerRecords: [],
+  resultPayload: null,
 }
 
 let gameDom: {
@@ -163,9 +176,9 @@ function render() {
     renderLoading()
     return
   }
-  if (state.phase === 'poster') {
+  if (state.phase === 'result') {
     teardownGame()
-    renderPosterView()
+    renderResultView()
     return
   }
   if (!gameDom) {
@@ -212,6 +225,69 @@ function bindContactModal() {
   })
 }
 
+function footerLinksHtml(): string {
+  return `
+      <div class="footer-links">
+        <span class="footer-contact-lead">想知道图像生成模型的工作原理？</span>
+        <a
+          class="footer-link"
+          id="link-tech"
+          href="${FEISHU_WIKI_URL}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >点击这里</a>
+        <div class="footer-contact-inline">
+          <span class="footer-contact-lead">如果想要接触好玩的开源项目，可以</span>
+          <button type="button" class="footer-link footer-link-btn" id="btn-open-contact">联系作者</button>
+          <span class="footer-contact-lead">，请备注来意</span>
+        </div>
+      </div>
+  `
+}
+
+function contactOverlayHtml(): string {
+  return `
+    <div class="contact-overlay hidden" id="contact-overlay">
+      <div class="contact-panel" id="contact-panel-inner">
+        <div class="contact-title">联系作者</div>
+        <button type="button" class="contact-row contact-row-btn" id="copy-wechat">
+          <span class="contact-label">微信：</span>
+          <span class="contact-value">${WECHAT_ID}</span>
+          <span class="contact-tip">（点击复制）</span>
+        </button>
+        <div class="contact-row contact-feishu-block">
+          <span class="contact-label">飞书：</span>
+          <img class="contact-feishu-qr" src="${FEISHU_QR_SRC}" alt="飞书二维码" />
+        </div>
+        <button type="button" class="contact-close" id="btn-contact-close">关闭</button>
+      </div>
+    </div>
+  `
+}
+
+function renderWrongListHtml(wrong: AnswerRecord[]): string {
+  if (wrong.length === 0) {
+    return '<p class="wrong-empty">本轮没有错题，真棒！</p>'
+  }
+  const labels = ['A', 'B', 'C', 'D']
+  return wrong
+    .map((w, idx) => {
+      const thumbs = w.images
+        .map(
+          (src) =>
+            `<img class="wrong-thumb" src="${src}" alt="" loading="lazy" width="80" height="80" />`
+        )
+        .join('')
+      return `
+        <div class="wrong-item">
+          <div class="wrong-item-head">错题 ${idx + 1}</div>
+          <p class="wrong-item-meta">你选择 <strong>${labels[w.selectedChoice]}</strong> · 正确为 <strong>${labels[w.answerIndex]}</strong></p>
+          <div class="wrong-item-grid">${thumbs}</div>
+        </div>`
+    })
+    .join('')
+}
+
 function renderLanding() {
   removePreviewLayer()
   app.innerHTML = `
@@ -248,37 +324,9 @@ function renderLanding() {
         </select>
         <button type="button" class="btn-start-game" id="btn-start-game">开始游戏</button>
       </div>
-      <div class="footer-links">
-        <span class="footer-contact-lead">想知道图像生成模型的工作原理？</span>
-        <a
-          class="footer-link"
-          id="link-tech"
-          href="${FEISHU_WIKI_URL}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >点击这里</a>
-        <div class="footer-contact-inline">
-          <span class="footer-contact-lead">如果想要接触好玩的开源项目，可以</span>
-          <button type="button" class="footer-link footer-link-btn" id="btn-open-contact">联系作者</button>
-          <span class="footer-contact-lead">，请备注来意</span>
-        </div>
-      </div>
+      ${footerLinksHtml()}
     </div>
-    <div class="contact-overlay hidden" id="contact-overlay">
-      <div class="contact-panel" id="contact-panel-inner">
-        <div class="contact-title">联系作者</div>
-        <button type="button" class="contact-row contact-row-btn" id="copy-wechat">
-          <span class="contact-label">微信：</span>
-          <span class="contact-value">${WECHAT_ID}</span>
-          <span class="contact-tip">（点击复制）</span>
-        </button>
-        <div class="contact-row contact-feishu-block">
-          <span class="contact-label">飞书：</span>
-          <img class="contact-feishu-qr" src="${FEISHU_QR_SRC}" alt="飞书二维码" />
-        </div>
-        <button type="button" class="contact-close" id="btn-contact-close">关闭</button>
-      </div>
-    </div>
+    ${contactOverlayHtml()}
     <div class="daily-tip-overlay hidden" id="daily-tip-overlay">
       <div class="daily-tip-panel" id="daily-tip-panel-inner">
         <p class="daily-tip-text">每日挑战暂未开放，请稍等一哈</p>
@@ -328,6 +376,7 @@ function startWithDifficulty(difficulty: GameDifficulty) {
   state.currentIndex = 0
   state.selectedChoice = null
   state.correctCount = 0
+  state.answerRecords = []
   state.previewSrc = null
   state.phase = 'loading'
   render()
@@ -493,9 +542,17 @@ function updatePlayingUI() {
 function goNext() {
   if (state.selectedChoice === null) return
   const question = currentQuestion()
-  if (state.selectedChoice === question.answerIndex) {
+  const choice = state.selectedChoice
+  const isCorrect = choice === question.answerIndex
+  if (isCorrect) {
     state.correctCount += 1
   }
+  state.answerRecords.push({
+    images: [...question.images],
+    answerIndex: question.answerIndex,
+    selectedChoice: choice,
+    isCorrect,
+  })
 
   const next = state.currentIndex + 1
   if (next >= state.questions.length) {
@@ -513,52 +570,79 @@ function finishChallenge() {
   const elapsedSec = (elapsedMs / 1000).toFixed(3)
   const total = state.questions.length
 
-  state.posterPayload = {
+  state.resultPayload = {
     nickName: state.nickName || '玩家',
     correctCount: state.correctCount,
     totalCount: total,
     elapsedSec,
+    wrongQuestions: state.answerRecords.filter((r) => !r.isCorrect),
   }
-  state.phase = 'poster'
+  state.phase = 'result'
   render()
 }
 
-function renderPosterView() {
-  const data = state.posterPayload!
+function renderResultView() {
+  const data = state.resultPayload!
+  const wrongHtml = renderWrongListHtml(data.wrongQuestions)
+
   app.innerHTML = `
-    <div class="poster-page">
-      <h2 class="poster-heading">成绩单海报</h2>
-      <canvas id="poster-canvas" class="poster-canvas-el" width="${POSTER_W}" height="${POSTER_H}"></canvas>
-      <div class="poster-actions">
-        <button type="button" class="btn-save-img" id="btn-save-png">保存为图片</button>
-        <button type="button" class="btn-home" id="btn-home">返回首页</button>
+    <div class="result-page">
+      <h2 class="result-title">你的最终成绩…</h2>
+      <p class="result-nick">${data.nickName}<span class="result-nick-label">（昵称）</span></p>
+      <p class="result-line">正确率：<strong>${data.correctCount}/${data.totalCount}</strong></p>
+      <p class="result-line">总耗时：<strong>${data.elapsedSec}</strong> 秒</p>
+      <div class="result-actions">
+        <button type="button" class="btn-result-secondary" id="btn-review-wrong">查看错题</button>
+        <button type="button" class="btn-result-secondary" id="btn-copy-site-url">复制本网站链接</button>
+        <button type="button" class="btn-result-primary" id="btn-result-home">回到首页</button>
+      </div>
+      ${footerLinksHtml()}
+    </div>
+    ${contactOverlayHtml()}
+    <div class="wrong-overlay hidden" id="wrong-overlay">
+      <div class="wrong-panel" id="wrong-panel-inner">
+        <div class="wrong-panel-title">错题回顾</div>
+        <div class="wrong-scroll" id="wrong-list-root">${wrongHtml}</div>
+        <button type="button" class="wrong-close" id="btn-wrong-close">关闭</button>
       </div>
     </div>
   `
 
-  const canvas = document.getElementById('poster-canvas') as HTMLCanvasElement
-  const ctx = canvas.getContext('2d')!
-  drawPoster(ctx, POSTER_W, POSTER_H, data)
+  const wrongOverlay = document.getElementById('wrong-overlay')!
+  const wrongPanel = document.getElementById('wrong-panel-inner')!
+  document.getElementById('btn-review-wrong')!.addEventListener('click', () => {
+    wrongOverlay.classList.remove('hidden')
+  })
+  document.getElementById('btn-wrong-close')!.addEventListener('click', () => {
+    wrongOverlay.classList.add('hidden')
+  })
+  wrongOverlay.addEventListener('click', (e) => {
+    if (e.target === wrongOverlay) wrongOverlay.classList.add('hidden')
+  })
+  wrongPanel.addEventListener('click', (e) => {
+    e.stopPropagation()
+  })
 
-  document.getElementById('btn-save-png')!.onclick = () => {
-    canvas.toBlob((blob) => {
-      if (!blob) return
-      const url = URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `扒拉图成绩单-${data.nickName}.png`
-      a.click()
-      URL.revokeObjectURL(url)
-    }, 'image/png')
-  }
+  document.getElementById('btn-copy-site-url')!.addEventListener('click', async () => {
+    const url = window.location.href
+    try {
+      await navigator.clipboard.writeText(url)
+      alert('已复制当前网页链接')
+    } catch {
+      prompt('请手动复制链接：', url)
+    }
+  })
 
-  document.getElementById('btn-home')!.onclick = () => {
+  document.getElementById('btn-result-home')!.addEventListener('click', () => {
     state.phase = 'landing'
     state.questions = []
-    state.posterPayload = null
+    state.resultPayload = null
+    state.answerRecords = []
     state.nickName = ''
     render()
-  }
+  })
+
+  bindContactModal()
 }
 
 render()
