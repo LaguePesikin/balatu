@@ -358,8 +358,7 @@ function renderLanding() {
         <button type="button" class="dice-btn" id="btn-dice-nick" title="随机昵称">🎲</button>
       </div>
       <div class="rules">
-        <p>每题四张照片，仅一张为真实拍摄，其余三张为 AI 生成</p>
-        <p>其余三张为 AI 生成的</p>
+        <p>每题四张照片，仅一张为真实拍摄，其余三张为 AI 生成的；</p>
         <p>你的目标是找出唯一真实的那张</p>
         <p>答题不限时；结束后按照正确率和耗时计分</p>
         <p>欢迎分享链接给朋友们一起玩</p>
