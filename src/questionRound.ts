@@ -6,7 +6,7 @@
  *   对象路径 = bucket_relative_path 去掉 `assets/` 前缀（与 COS 上 easy/xxx.png 一致）
  * - 真图目录：VITE_COS_TRUE_FOLDER（默认 true_images）
  *
- * 题量：各难度「希望题数」与 min(真图数, floor(假图数/3)) 取小，至少 1 题。
+ * 题量：各难度目标均为 10 题；若真图或假图池不足，则降为 min(10, 真图数, floor(假图数/3))，至少 1 题。
  * hell 使用 extreme 假图池。
  */
 
@@ -47,10 +47,10 @@ type TrueCatalog = {
 const GENERATED = generatedCatalogJson as GeneratedCatalog
 const TRUE_CAT = trueCatalogJson as TrueCatalog
 
-/** 各难度希望题数上限；实际题数会受池子大小限制 */
+/** 各难度目标题数（均为 10）；实际题数仍受池子大小限制 */
 export const DESIRED_QUESTIONS_PER_ROUND: Record<GameDifficulty, number> = {
-  easy: 5,
-  medium: 8,
+  easy: 10,
+  medium: 10,
   hard: 10,
   hell: 10,
 }
