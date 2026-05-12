@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "true_count": 10,
+  "entries": [
+    {
+      "uid": "83ad2dbf-7d41-4a8b-a204-c75a85a0e1d1",
+      "filename": "83ad2dbf-7d41-4a8b-a204-c75a85a0e1d1.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/83ad2dbf-7d41-4a8b-a204-c75a85a0e1d1.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-1.png"
+      ],
+      "content_sha256": "4c95e1db5cdb63b892e28ddbed469109c4a17baf82c64826fff7c8fb21de7646"
+    },
+    {
+      "uid": "e705c6d9-b3d3-4296-bf09-0c0583850c86",
+      "filename": "e705c6d9-b3d3-4296-bf09-0c0583850c86.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/e705c6d9-b3d3-4296-bf09-0c0583850c86.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-10.png"
+      ],
+      "content_sha256": "68a7c51e34aab133f73f5b8e85df31770459f18718e6a69b8439691acb556961"
+    },
+    {
+      "uid": "8275bf9c-d90f-4f98-8c2a-bc78eb9bff6c",
+      "filename": "8275bf9c-d90f-4f98-8c2a-bc78eb9bff6c.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/8275bf9c-d90f-4f98-8c2a-bc78eb9bff6c.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-2.png"
+      ],
+      "content_sha256": "13dd88307b05fcc8541a57ab1e0545b1fbcfb3e88755f4f3d86cb55a4ab15045"
+    },
+    {
+      "uid": "0adaa436-b95d-47b6-bbc4-7f8b181b6fd7",
+      "filename": "0adaa436-b95d-47b6-bbc4-7f8b181b6fd7.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/0adaa436-b95d-47b6-bbc4-7f8b181b6fd7.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-3.png"
+      ],
+      "content_sha256": "8911a5b25ece78a38eb77224e3cd2623eecee1a8cca4c8c28eead047a77132a9"
+    },
+    {
+      "uid": "452f9b33-5844-44b6-9b7c-17c56ceed5b3",
+      "filename": "452f9b33-5844-44b6-9b7c-17c56ceed5b3.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/452f9b33-5844-44b6-9b7c-17c56ceed5b3.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-4.png"
+      ],
+      "content_sha256": "a43e01a2e4a8f0e69ca41ce383a219b9899d746525f70eff8056a9f143fec471"
+    },
+    {
+      "uid": "2bc60440-7513-4b04-9fc9-b5d2dd053250",
+      "filename": "2bc60440-7513-4b04-9fc9-b5d2dd053250.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/2bc60440-7513-4b04-9fc9-b5d2dd053250.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-5.png"
+      ],
+      "content_sha256": "f57f85c082c5c3a41627ec1728c3cf327fbc60ec6d9464ddc17d67d3d39e51ec"
+    },
+    {
+      "uid": "8b1889dc-6ce1-4a56-9aa2-8af67e418012",
+      "filename": "8b1889dc-6ce1-4a56-9aa2-8af67e418012.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/8b1889dc-6ce1-4a56-9aa2-8af67e418012.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-6.png"
+      ],
+      "content_sha256": "ea6abefc067466ac823f026418562b185f03c749081c80663b66da0a696661cd"
+    },
+    {
+      "uid": "e6955ef6-86c6-4c3a-9b50-2841c701b0d8",
+      "filename": "e6955ef6-86c6-4c3a-9b50-2841c701b0d8.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/e6955ef6-86c6-4c3a-9b50-2841c701b0d8.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-7.png"
+      ],
+      "content_sha256": "df522e630aef3dc431644ce0d4d1c99cd4fe4488907d8d7a4660b5bd0ff3940b"
+    },
+    {
+      "uid": "61a31c83-bea3-405f-8534-29d115e23d1d",
+      "filename": "61a31c83-bea3-405f-8534-29d115e23d1d.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/61a31c83-bea3-405f-8534-29d115e23d1d.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-8.png"
+      ],
+      "content_sha256": "d0816033b9d9007e0a165b2a67ebafef730daf7636d830dcb38d06f0d6bf205e"
+    },
+    {
+      "uid": "654a0991-03f1-4d4b-a897-91355cf623ba",
+      "filename": "654a0991-03f1-4d4b-a897-91355cf623ba.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/true_images/654a0991-03f1-4d4b-a897-91355cf623ba.png",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/easy/true-9.png"
+      ],
+      "content_sha256": "617e6b4324b650a6d9f6c8b7995e830812a9ce91dc1207665f2dd500a383bd02"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 /**
  * 网页版题目图（UUID + 索引驱动）：
- * - 假图：`../assets/all_generated_images/index.json`（按 difficulty_from_detector 分桶）
- * - 真图：`../assets/true_images/index.json`
+ * - 假图：`./catalog/generated-images-index.json`（构建时由脚本从 ../assets 同步，须提交到 Git 供 Vercel）
+ * - 真图：`./catalog/true-images-index.json`
  * - URL：需配置 COS（VITE_COS_BUCKET + VITE_COS_REGION）或 VITE_IMAGE_CDN_BASE；
  *   对象路径 = bucket_relative_path 去掉 `assets/` 前缀（与 COS 上 easy/xxx.png 一致）
  * - 真图目录：VITE_COS_TRUE_FOLDER（默认 true_images）
@@ -10,8 +10,8 @@
  * hell 使用 extreme 假图池。
  */
 
-import generatedCatalogJson from '../../assets/all_generated_images/index.json'
-import trueCatalogJson from '../../assets/true_images/index.json'
+import generatedCatalogJson from './catalog/generated-images-index.json'
+import trueCatalogJson from './catalog/true-images-index.json'
 
 export type Question = {
   answerIndex: number
