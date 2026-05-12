@@ -79,11 +79,21 @@ let gameDom: {
 let previewLayer: HTMLDivElement | null = null
 
 function explain(err: string): string {
-  if (err === 'TRUE_POOL_SMALL') {
-    return '图库数量不足当前难度：请增加对应难度的远端（COS）或本地 public/images 资源，或调高题库索引上限。'
+  if (err === 'CONFIG_CATALOG_NEED_REMOTE') {
+    return '请配置腾讯云 COS：在 web/.env 中设置 VITE_COS_BUCKET 与 VITE_COS_REGION（或 VITE_IMAGE_CDN_BASE），否则无法按 UUID 索引加载题目图。'
   }
-  if (err === 'FALSE_POOL_EMPTY') return '未找到 false 图。'
-  if (err === 'FALSE_POOL_SMALL') return 'false 图数量不足。'
+  if (err === 'TRUE_POOL_EMPTY') {
+    return '未找到真图索引：请确认 assets/true_images/index.json 与 COS 上 true_images 目录已上传。'
+  }
+  if (err === 'FALSE_POOL_EMPTY') {
+    return '当前难度下没有假图：请确认 all_generated_images 索引里 difficulty_from_detector 与 COS 子目录（easy/medium/hard/extreme）一致并已上传。'
+  }
+  if (err === 'TRUE_POOL_SMALL') {
+    return '真图数量不足以完成本局题量（已按池子自动压缩题数后仍不足）。请增加 true_images 或调低难度期望题数。'
+  }
+  if (err === 'FALSE_POOL_SMALL') {
+    return '假图数量不足：当前难度池子内 UUID 图不够抽满本局。请增加该难度 COS 图或调低期望题数。'
+  }
   return '题目加载失败。'
 }
 
@@ -348,7 +358,7 @@ function renderLanding() {
         <button type="button" class="dice-btn" id="btn-dice-nick" title="随机昵称">🎲</button>
       </div>
       <div class="rules">
-        <p>总共 <strong>10</strong> 题，每题四张照片，其中仅有一张是真实拍摄</p>
+        <p>每题四张照片，仅一张为真实拍摄，其余三张为 AI 生成；题量随难度与图库自动调整（简单最多 5 题 / 中等 8 题 / 困难与地狱各最多 10 题，且不超过 COS 上该难度池子能支撑的数量）。</p>
         <p>其余三张为 AI 生成的</p>
         <p>你的目标是找出唯一真实的那张</p>
         <p>答题不限时；结束后按照正确率和耗时计分</p>

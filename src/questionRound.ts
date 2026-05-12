@@ -1,15 +1,17 @@
 /**
- * 网页版题目图：
- * - 默认本地：public/images/true-n.jpeg、false-n.jpeg
- * - 腾讯云 COS：配置 VITE_COS_BUCKET + VITE_COS_REGION，拼接
- *   https://{bucket}.cos.{region}.myqcloud.com/{难度目录}/true-n.{ext}
- * - 或自定义根 URL：VITE_IMAGE_CDN_BASE（不含难度目录，脚本会追加 easy|medium|hard|extreme）
+ * 网页版题目图（UUID + 索引驱动）：
+ * - 假图：`../assets/all_generated_images/index.json`（按 difficulty_from_detector 分桶）
+ * - 真图：`../assets/true_images/index.json`
+ * - URL：需配置 COS（VITE_COS_BUCKET + VITE_COS_REGION）或 VITE_IMAGE_CDN_BASE；
+ *   对象路径 = bucket_relative_path 去掉 `assets/` 前缀（与 COS 上 easy/xxx.png 一致）
+ * - 真图目录：VITE_COS_TRUE_FOLDER（默认 true_images）
  *
- * 远程扩展名默认 png（与 COS 资源一致），可用 VITE_GAME_IMAGE_EXT 覆盖。
- * hell 难度对应存储目录名 extreme（与 assets 目录一致）。
- *
- * 难度题量：easy 5 / medium 8 / hard、hell 各 10（hell 多 shuffle 一次）。
+ * 题量：各难度「希望题数」与 min(真图数, floor(假图数/3)) 取小，至少 1 题。
+ * hell 使用 extreme 假图池。
  */
+
+import generatedCatalogJson from '../../assets/all_generated_images/index.json'
+import trueCatalogJson from '../../assets/true_images/index.json'
 
 export type Question = {
   answerIndex: number
@@ -22,16 +24,40 @@ export type BuildResult =
 
 export type GameDifficulty = 'easy' | 'medium' | 'hard' | 'hell'
 
-export const GAME_CONFIG = {
-  TRUE_IMAGE_MAX_INDEX: 10,
-  FALSE_IMAGE_MAX_INDEX: 158,
+type GeneratedEntry = {
+  uid: string
+  filename: string
+  bucket_relative_path?: string | null
+  difficulty_from_detector?: string | null
 }
 
-const QUESTIONS_PER_ROUND: Record<GameDifficulty, number> = {
+type GeneratedCatalog = {
+  entries: GeneratedEntry[]
+}
+
+type TrueEntry = {
+  uid: string
+  filename: string
+}
+
+type TrueCatalog = {
+  entries: TrueEntry[]
+}
+
+const GENERATED = generatedCatalogJson as GeneratedCatalog
+const TRUE_CAT = trueCatalogJson as TrueCatalog
+
+/** 各难度希望题数上限；实际题数会受池子大小限制 */
+export const DESIRED_QUESTIONS_PER_ROUND: Record<GameDifficulty, number> = {
   easy: 5,
   medium: 8,
   hard: 10,
   hell: 10,
+}
+
+/** 兼容旧引用：已不再使用固定 max index */
+export const GAME_CONFIG = {
+  DESIRED_QUESTIONS_PER_ROUND,
 }
 
 function shuffle<T>(arr: T[]): void {
@@ -41,23 +67,19 @@ function shuffle<T>(arr: T[]): void {
   }
 }
 
-function sampleUnique(maxIndex: number, count: number): number[] | null {
-  if (maxIndex < count) return null
-  const pool = Array.from({ length: maxIndex }, (_, i) => i + 1)
-  shuffle(pool)
-  return pool.slice(0, count)
+function sampleUniqueFrom<T>(arr: T[], count: number): T[] | null {
+  if (arr.length < count) return null
+  const copy = [...arr]
+  shuffle(copy)
+  return copy.slice(0, count)
 }
 
-function sampleWithReplacement(maxIndex: number, count: number): number[] {
-  const out: number[] = []
+function sampleWithReplacement<T>(arr: T[], count: number): T[] {
+  const out: T[] = []
   for (let i = 0; i < count; i++) {
-    out.push(Math.floor(Math.random() * maxIndex) + 1)
+    out.push(arr[Math.floor(Math.random() * arr.length)])
   }
   return out
-}
-
-function imageUrl(prefix: string, kind: 'true' | 'false', index: number, ext: string): string {
-  return `${prefix}${kind}-${index}.${ext}`
 }
 
 /** hell 在 COS 上与文件夹 extreme 对应 */
@@ -82,66 +104,93 @@ function remoteStorageRoot(): string | null {
   return null
 }
 
-function imageExtension(remote: boolean): string {
-  if (!remote) return 'jpeg'
-  const raw = ((import.meta.env.VITE_GAME_IMAGE_EXT as string | undefined) || 'png').trim()
-  return raw.replace(/^\./, '')
+/** COS 对象键：去掉 catalog 里的 assets/ 前缀 */
+function falseObjectKey(entry: GeneratedEntry, tier: string): string {
+  const br = entry.bucket_relative_path?.trim()
+  if (br) {
+    return br.replace(/^assets\//, '').replace(/^\/+/, '')
+  }
+  return `${tier}/${entry.filename}`
 }
 
-function imagesPrefix(difficulty: GameDifficulty): string {
-  const remoteRoot = remoteStorageRoot()
-  if (remoteRoot) {
-    const dir = difficultyFolder(difficulty)
-    return `${remoteRoot}/${dir}/`
-  }
-  const base = import.meta.env.BASE_URL || '/'
-  return base.endsWith('/') ? `${base}images/` : `${base}/images/`
+function trueObjectKey(entry: TrueEntry): string {
+  const folder = (import.meta.env.VITE_COS_TRUE_FOLDER as string | undefined)?.trim() || 'true_images'
+  return `${folder.replace(/^\/+|\/+$/g, '')}/${entry.filename}`
+}
+
+function falseImageUrl(root: string, entry: GeneratedEntry, tier: string): string {
+  const key = falseObjectKey(entry, tier)
+  return `${root}/${key}`
+}
+
+function trueImageUrl(root: string, entry: TrueEntry): string {
+  return `${root}/${trueObjectKey(entry)}`
+}
+
+function poolFalseForTier(tier: string): GeneratedEntry[] {
+  return (GENERATED.entries || []).filter(
+    (e) => e.filename && (e.difficulty_from_detector || '') === tier
+  )
+}
+
+function poolTrueAll(): TrueEntry[] {
+  return (TRUE_CAT.entries || []).filter((e) => e.filename)
+}
+
+function chooseRoundSize(difficulty: GameDifficulty, trueLen: number, falseLen: number): number {
+  const want = DESIRED_QUESTIONS_PER_ROUND[difficulty] ?? 10
+  const maxByFalse = Math.floor(falseLen / 3)
+  return Math.max(1, Math.min(want, trueLen, maxByFalse))
 }
 
 export function buildQuestionRound(
-  config: typeof GAME_CONFIG = GAME_CONFIG,
+  _legacy: typeof GAME_CONFIG | undefined,
   options?: { difficulty?: GameDifficulty }
 ): BuildResult {
   const difficulty: GameDifficulty = options?.difficulty ?? 'hard'
-  const n = QUESTIONS_PER_ROUND[difficulty] ?? 10
-
-  const remote = remoteStorageRoot() !== null
-  const prefix = imagesPrefix(difficulty)
-  const ext = imageExtension(remote)
-  const trueMax = config.TRUE_IMAGE_MAX_INDEX
-  const falseMax = config.FALSE_IMAGE_MAX_INDEX
-
-  if (trueMax < n) {
-    return { ok: false, error: 'TRUE_POOL_SMALL' }
+  const root = remoteStorageRoot()
+  if (!root) {
+    return { ok: false, error: 'CONFIG_CATALOG_NEED_REMOTE' }
   }
-  if (falseMax < 1) {
+
+  const tier = difficultyFolder(difficulty)
+  const falsePool = poolFalseForTier(tier)
+  const truePool = poolTrueAll()
+
+  if (truePool.length < 1) {
+    return { ok: false, error: 'TRUE_POOL_EMPTY' }
+  }
+  if (falsePool.length < 1) {
     return { ok: false, error: 'FALSE_POOL_EMPTY' }
   }
 
-  const trueSamples = sampleUnique(trueMax, n)
+  const n = chooseRoundSize(difficulty, truePool.length, falsePool.length)
+
+  const trueSamples = sampleUniqueFrom(truePool, n)
   if (!trueSamples) {
     return { ok: false, error: 'TRUE_POOL_SMALL' }
   }
 
   const needFalse = n * 3
-  let falseSamples: number[]
-  if (falseMax >= needFalse) {
-    const f = sampleUnique(falseMax, needFalse)
+  let falseSamples: GeneratedEntry[]
+  if (falsePool.length >= needFalse) {
+    const f = sampleUniqueFrom(falsePool, needFalse)
     if (!f) return { ok: false, error: 'FALSE_POOL_SMALL' }
     falseSamples = f
   } else {
-    falseSamples = sampleWithReplacement(falseMax, needFalse)
+    falseSamples = sampleWithReplacement(falsePool, needFalse)
   }
 
   const questions: Question[] = []
 
   for (let q = 0; q < n; q++) {
-    const truePath = imageUrl(prefix, 'true', trueSamples[q], ext)
-    const falses = [
-      imageUrl(prefix, 'false', falseSamples[q * 3], ext),
-      imageUrl(prefix, 'false', falseSamples[q * 3 + 1], ext),
-      imageUrl(prefix, 'false', falseSamples[q * 3 + 2], ext),
-    ]
+    const tEntry = trueSamples[q]
+    const f0 = falseSamples[q * 3]
+    const f1 = falseSamples[q * 3 + 1]
+    const f2 = falseSamples[q * 3 + 2]
+
+    const truePath = trueImageUrl(root, tEntry)
+    const falses = [falseImageUrl(root, f0, tier), falseImageUrl(root, f1, tier), falseImageUrl(root, f2, tier)]
 
     type Slot = { kind: 't' | 'f'; src: string }
     const slots: Slot[] = [{ kind: 't', src: truePath }, ...falses.map((src) => ({ kind: 'f' as const, src }))]
@@ -160,4 +209,26 @@ export function buildQuestionRound(
   }
 
   return { ok: true, questions }
+}
+
+/** 供 UI 展示当前难度池子规模 */
+export function getCatalogPoolStats(difficulty: GameDifficulty): {
+  tier: string
+  falseCount: number
+  trueCount: number
+  desired: number
+  actualN: number
+} {
+  const tier = difficultyFolder(difficulty)
+  const falsePool = poolFalseForTier(tier)
+  const truePool = poolTrueAll()
+  const desired = DESIRED_QUESTIONS_PER_ROUND[difficulty] ?? 10
+  const actualN = chooseRoundSize(difficulty, truePool.length, falsePool.length)
+  return {
+    tier,
+    falseCount: falsePool.length,
+    trueCount: truePool.length,
+    desired,
+    actualN,
+  }
 }
