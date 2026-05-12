@@ -83,10 +83,10 @@ function explain(err: string): string {
     return '请配置腾讯云 COS：在 web/.env 中设置 VITE_COS_BUCKET 与 VITE_COS_REGION（或 VITE_IMAGE_CDN_BASE），否则无法按 UUID 索引加载题目图。'
   }
   if (err === 'TRUE_POOL_EMPTY') {
-    return '未找到真图索引：请确认 assets/true_images/index.json 与 COS 上 true_images 目录已上传。'
+    return '未找到真图索引：请确认 web/src/catalog/true-images-index.json 已提交，且 COS 上 true_images 目录已上传。'
   }
   if (err === 'FALSE_POOL_EMPTY') {
-    return '当前难度下没有假图：请确认 all_generated_images 索引里 difficulty_from_detector 与 COS 子目录（easy/medium/hard/extreme）一致并已上传。'
+    return '当前难度下没有假图：请确认 catalog 中 difficulty_from_detector 与 COS 子目录（easy/medium/hard/extreme）一致并已上传。'
   }
   if (err === 'TRUE_POOL_SMALL') {
     return '真图数量不足以完成本局题量（已按池子自动压缩题数后仍不足）。请增加 true_images 或调低难度期望题数。'
@@ -345,7 +345,7 @@ function renderLanding() {
     <div class="landing">
       <h1>扒拉图 🔍</h1>
       <p class="sub">AI 生图越来越真实了？😱</p>
-      <p class="sub">通过这个简单测试，来看看你分辨 AI 图片的能力</p>
+      <p class="sub">通过这个简单测试，来看看你分辨 AI 图片的能力 👉</p>
       <label class="nick-label" for="nick-input">昵称</label>
       <div class="nick-input-wrap">
         <input
@@ -358,7 +358,7 @@ function renderLanding() {
         <button type="button" class="dice-btn" id="btn-dice-nick" title="随机昵称">🎲</button>
       </div>
       <div class="rules">
-        <p>每题四张照片，仅一张为真实拍摄，其余三张为 AI 生成；题量随难度与图库自动调整（简单最多 5 题 / 中等 8 题 / 困难与地狱各最多 10 题，且不超过 COS 上该难度池子能支撑的数量）。</p>
+        <p>每题四张照片，仅一张为真实拍摄，其余三张为 AI 生成</p>
         <p>其余三张为 AI 生成的</p>
         <p>你的目标是找出唯一真实的那张</p>
         <p>答题不限时；结束后按照正确率和耗时计分</p>
