@@ -283,7 +283,7 @@ async function openRankBoardModal() {
   hint.textContent = '加载中…'
   list.innerHTML = ''
 
-  const res = await fetchLeaderboard(difficulty, 50)
+  const res = await fetchLeaderboard(difficulty, 10)
   if (!res.ok) {
     hint.textContent =
       res.error === 'NOT_CONFIGURED'
@@ -292,7 +292,7 @@ async function openRankBoardModal() {
     return
   }
 
-  hint.textContent = `${DIFF_LABEL[difficulty]} · 展示前 ${res.entries.length} 名`
+  hint.textContent = `${DIFF_LABEL[difficulty]} · 前10名`
 
   if (res.entries.length === 0) {
     list.innerHTML = '<p class="rank-empty">暂无记录，完成一局即有机会上榜～</p>'

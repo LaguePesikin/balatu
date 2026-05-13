@@ -51,7 +51,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return
   }
 
-  const limit = Math.min(100, Math.max(1, parseInt(String(req.query.limit || '50'), 10) || 50))
+  const limit = Math.min(10, Math.max(1, parseInt(String(req.query.limit || '10'), 10) || 10))
 
   const entries: {
     rank: number

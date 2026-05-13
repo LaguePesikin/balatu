@@ -43,7 +43,7 @@ export type LeaderboardRow = {
 
 export async function fetchLeaderboard(
   difficulty: GameDifficulty,
-  limit = 50
+  limit = 10
 ): Promise<{ ok: true; entries: LeaderboardRow[] } | { ok: false; error: string; message: string }> {
   try {
     const q = new URLSearchParams({ difficulty, limit: String(limit) })
