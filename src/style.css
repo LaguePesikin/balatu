@@ -711,6 +711,12 @@ body {
   object-fit: cover;
   border-radius: 6px;
   background: #374151;
+  cursor: pointer;
+}
+
+.wrong-thumb:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
 }
 
 .wrong-close {
@@ -724,6 +730,53 @@ body {
   font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* 错题缩略图点击放大 */
+.wrong-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3200;
+  background: rgba(0, 0, 0, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.wrong-zoom-overlay.hidden {
+  display: none;
+}
+
+.wrong-zoom-img {
+  max-width: min(100vw - 2rem, 960px);
+  max-height: min(92vh, 960px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.wrong-zoom-close {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #f9fafb;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.wrong-zoom-close:active {
+  opacity: 0.85;
 }
 
 /* —— 游戏 —— */

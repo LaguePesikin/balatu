@@ -335,7 +335,7 @@ function renderWrongListHtml(wrong: AnswerRecord[]): string {
       const thumbs = w.images
         .map(
           (src) =>
-            `<img class="wrong-thumb" src="${src}" alt="" loading="lazy" width="80" height="80" />`
+            `<img class="wrong-thumb" src="${src}" alt="" loading="lazy" width="80" height="80" role="button" tabindex="0" title="点击放大" />`
         )
         .join('')
       return `
@@ -686,6 +686,10 @@ function renderResultView() {
         <button type="button" class="wrong-close" id="btn-wrong-close">关闭</button>
       </div>
     </div>
+    <div class="wrong-zoom-overlay hidden" id="wrong-zoom-overlay" role="dialog" aria-modal="true" aria-label="图片放大">
+      <button type="button" class="wrong-zoom-close" id="btn-wrong-zoom-close" aria-label="关闭放大">✕</button>
+      <img class="wrong-zoom-img" id="wrong-zoom-img" src="" alt="放大预览" />
+    </div>
   `
 
   const wrongOverlay = document.getElementById('wrong-overlay')!
@@ -703,6 +707,57 @@ function renderResultView() {
     e.stopPropagation()
   })
 
+  const wrongZoom = document.getElementById('wrong-zoom-overlay')
+  const wrongZoomImg = document.getElementById('wrong-zoom-img') as HTMLImageElement | null
+  const wrongListRoot = document.getElementById('wrong-list-root')
+
+  const closeWrongZoom = () => {
+    wrongZoom?.classList.add('hidden')
+    if (wrongZoomImg) wrongZoomImg.src = ''
+  }
+
+  const openWrongZoom = (src: string) => {
+    if (!wrongZoom || !wrongZoomImg || !src) return
+    wrongZoomImg.src = src
+    wrongZoom.classList.remove('hidden')
+  }
+
+  wrongListRoot?.addEventListener('click', (e) => {
+    const el = e.target as HTMLElement
+    if (el.tagName !== 'IMG' || !el.classList.contains('wrong-thumb')) return
+    openWrongZoom((el as HTMLImageElement).currentSrc || (el as HTMLImageElement).src)
+  })
+
+  wrongListRoot?.addEventListener(
+    'keydown',
+    (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return
+      const el = e.target as HTMLElement
+      if (el.tagName !== 'IMG' || !el.classList.contains('wrong-thumb')) return
+      e.preventDefault()
+      openWrongZoom((el as HTMLImageElement).currentSrc || (el as HTMLImageElement).src)
+    },
+    true
+  )
+
+  wrongZoom?.addEventListener('click', (e) => {
+    if (e.target === wrongZoom) closeWrongZoom()
+  })
+  document.getElementById('btn-wrong-zoom-close')?.addEventListener('click', (e) => {
+    e.stopPropagation()
+    closeWrongZoom()
+  })
+  wrongZoomImg?.addEventListener('click', () => {
+    closeWrongZoom()
+  })
+
+  const onWrongZoomEscape = (ev: KeyboardEvent) => {
+    if (ev.key !== 'Escape') return
+    if (!wrongZoom || wrongZoom.classList.contains('hidden')) return
+    closeWrongZoom()
+  }
+  document.addEventListener('keydown', onWrongZoomEscape)
+
   document.getElementById('btn-copy-site-url')!.addEventListener('click', async () => {
     const url = window.location.href
     const text = buildWebShareCopy(url)
@@ -715,6 +770,7 @@ function renderResultView() {
   })
 
   document.getElementById('btn-result-home')!.addEventListener('click', () => {
+    document.removeEventListener('keydown', onWrongZoomEscape)
     state.phase = 'landing'
     state.questions = []
     state.resultPayload = null
