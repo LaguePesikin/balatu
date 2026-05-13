@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { getRedis, metaKey, zkey } from './_redis'
+import { getRedis, metaKey, zkey } from './_redis.js'
 
 const DIFFS = new Set(['easy', 'medium', 'hard', 'hell'])
 
