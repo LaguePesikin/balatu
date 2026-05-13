@@ -37,7 +37,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const limit = Math.min(100, Math.max(1, parseInt(String(req.query.limit || '50'), 10) || 50))
 
   const zk = zkey(difficulty)
-  const flat = await redis.zrange<string>(zk, 0, limit - 1, { rev: true, withScores: true })
+  /** withScores 时为 [member, score, …]；泛型须为数组类型，见 @upstash/redis ZRangeCommand */
+  const flat = await redis.zrange<(string | number)[]>(zk, 0, limit - 1, { rev: true, withScores: true })
 
   const entries: {
     rank: number
@@ -51,7 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const member = flat[i]
     const scoreStr = flat[i + 1]
     if (member == null || scoreStr == null) continue
-    const raw = await redis.get<string>(metaKey(member))
+    const raw = await redis.get<string>(metaKey(String(member)))
     let nick = '玩家'
     let correctCount = 0
     let totalCount = 0
