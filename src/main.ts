@@ -278,7 +278,7 @@ function footerLinksHtml(): string {
           rel="noopener noreferrer"
         >点击这里</a>
         <div class="footer-contact-inline">
-          <span class="footer-contact-lead">如果想要接触好玩的开源项目，可以</span>
+          <span class="footer-contact-lead">如果您有意见或建议，或想要了解更多好玩的开源项目，可以</span>
           <button type="button" class="footer-link footer-link-btn" id="btn-open-contact">联系作者</button>
           <span class="footer-contact-lead">，请备注来意</span>
         </div>
