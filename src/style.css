@@ -248,6 +248,15 @@ body {
   text-align: left;
 }
 
+.footer-quote {
+  margin: 0 0 1.15rem;
+  padding: 0.65rem 0 0.65rem 1rem;
+  border-left: 3px solid #6b7280;
+  color: #e5e7eb;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
 .footer-link {
   display: block;
   margin-top: 1rem;
@@ -262,8 +271,8 @@ body {
   margin-top: 0;
 }
 
-/* 页脚第一行：说明文字 + 「点击这里」同一行 */
-.footer-links > .footer-contact-lead:first-child {
+/* 页脚：引用块下方，说明文字 + 「点击这里」同一行 */
+.footer-links > .footer-contact-lead:first-of-type {
   display: inline;
   color: #d1d5db;
   font-size: 0.88rem;

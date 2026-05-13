@@ -264,6 +264,11 @@ function bindContactModal() {
 function footerLinksHtml(): string {
   return `
       <div class="footer-links">
+        <blockquote class="footer-quote">
+          在 AI 生成内容日渐泛滥的今日，保持怀疑、审慎的态度，<br />
+          不仅是对著作权和创作本身的尊重，<br />
+          同时也是坚守属于人类“自主思考”的阵地。
+        </blockquote>
         <span class="footer-contact-lead">想知道图像生成模型的工作原理？</span>
         <a
           class="footer-link"
