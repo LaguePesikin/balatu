@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "description": "合并自 gpt-image2-plus、output、assets/*/false-*。难度梯级待 ai_detector_score 填入后由工具写 difficulty_from_detector。",
+  "description": "合并自 gpt-image2-plus、output、assets/*/false-*。难度梯级待 ai_detector_score 填入后由工具写 difficulty_from_detector。 含 skyline_output 追加批次。 含 skyline_output 追加批次（UUID 对象键）。",
   "difficulty_from_detector_rules": {
     "easy": "ai_detector_score >= 75",
     "medium": "50 <= ai_detector_score < 75",
     "hard": "25 <= ai_detector_score < 50",
     "extreme": "ai_detector_score < 25"
   },
-  "generated_count": 257,
+  "generated_count": 285,
   "entries": [
     {
       "uid": "b15909aa-79b7-4835-a409-c1d0e878e241",
@@ -5128,6 +5128,566 @@
       "ai_detector_score": 83,
       "difficulty_from_detector": "easy",
       "bucket_relative_path": "assets/easy/2aa6134c-db94-4506-a709-7e493f08e829.png"
+    },
+    {
+      "uid": "b2f4c8db-0b98-4291-afd6-643880ba2c8b",
+      "filename": "b2f4c8db-0b98-4291-afd6-643880ba2c8b.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/b2f4c8db-0b98-4291-afd6-643880ba2c8b.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/easy/001.png"
+      ],
+      "content_sha256": "8bc8803cbff646dbaaf5c72272863b10f12c87c5275b43174c6b7f15108b9cbc",
+      "ai_detector_score": 82,
+      "difficulty_from_detector": "easy",
+      "bucket_relative_path": "assets/easy/b2f4c8db-0b98-4291-afd6-643880ba2c8b.png"
+    },
+    {
+      "uid": "ece4810f-9794-4168-9699-59b44038f27d",
+      "filename": "ece4810f-9794-4168-9699-59b44038f27d.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/ece4810f-9794-4168-9699-59b44038f27d.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/easy/002.png"
+      ],
+      "content_sha256": "330b64262ea4d35641bde9578b403f32191fac1fac1f5705faa3a802791e06f0",
+      "ai_detector_score": 82,
+      "difficulty_from_detector": "easy",
+      "bucket_relative_path": "assets/easy/ece4810f-9794-4168-9699-59b44038f27d.png"
+    },
+    {
+      "uid": "a3de7a56-9de3-4221-8706-6f44d394ef81",
+      "filename": "a3de7a56-9de3-4221-8706-6f44d394ef81.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/a3de7a56-9de3-4221-8706-6f44d394ef81.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/easy/003.png"
+      ],
+      "content_sha256": "d5406eadf28dd9a66feacf351a84fe37697d47491d5dff6b48825516c53fbb8a",
+      "ai_detector_score": 82,
+      "difficulty_from_detector": "easy",
+      "bucket_relative_path": "assets/easy/a3de7a56-9de3-4221-8706-6f44d394ef81.png"
+    },
+    {
+      "uid": "ce1dc4c9-441d-4f5b-b4f1-3c1e0402668e",
+      "filename": "ce1dc4c9-441d-4f5b-b4f1-3c1e0402668e.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/ce1dc4c9-441d-4f5b-b4f1-3c1e0402668e.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/easy/004.png"
+      ],
+      "content_sha256": "8b284152cf0b30f29042f4463b7e7f60cfda23c864ec8b7d8ba4665e33e35a6d",
+      "ai_detector_score": 82,
+      "difficulty_from_detector": "easy",
+      "bucket_relative_path": "assets/easy/ce1dc4c9-441d-4f5b-b4f1-3c1e0402668e.png"
+    },
+    {
+      "uid": "2ee8b312-4efe-4c62-9952-cb94e102c62b",
+      "filename": "2ee8b312-4efe-4c62-9952-cb94e102c62b.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/2ee8b312-4efe-4c62-9952-cb94e102c62b.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/easy/005.png"
+      ],
+      "content_sha256": "22e466e6920bfdb7bf46016ec8ebd47c38e0e02fdebeb2dd5fb7c291904f0133",
+      "ai_detector_score": 82,
+      "difficulty_from_detector": "easy",
+      "bucket_relative_path": "assets/easy/2ee8b312-4efe-4c62-9952-cb94e102c62b.png"
+    },
+    {
+      "uid": "c5ac49f5-0b16-4c62-90f1-dad767ca92fb",
+      "filename": "c5ac49f5-0b16-4c62-90f1-dad767ca92fb.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/c5ac49f5-0b16-4c62-90f1-dad767ca92fb.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/easy/006.png"
+      ],
+      "content_sha256": "473c15dcb705ab34520db2c8c77537010e2d277defa3476d17ddc468e7e8c3c2",
+      "ai_detector_score": 82,
+      "difficulty_from_detector": "easy",
+      "bucket_relative_path": "assets/easy/c5ac49f5-0b16-4c62-90f1-dad767ca92fb.png"
+    },
+    {
+      "uid": "52165db7-70aa-47c5-b7d1-b7e02457eb8c",
+      "filename": "52165db7-70aa-47c5-b7d1-b7e02457eb8c.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/52165db7-70aa-47c5-b7d1-b7e02457eb8c.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "easy"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/easy/007.png"
+      ],
+      "content_sha256": "1baf98fb52a91177dc94a64dcd98c70db29ebe3768d8651359e28d7b9d08ae19",
+      "ai_detector_score": 82,
+      "difficulty_from_detector": "easy",
+      "bucket_relative_path": "assets/easy/52165db7-70aa-47c5-b7d1-b7e02457eb8c.png"
+    },
+    {
+      "uid": "c003a722-0812-4d60-9a4f-32adc1b92ab6",
+      "filename": "c003a722-0812-4d60-9a4f-32adc1b92ab6.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/c003a722-0812-4d60-9a4f-32adc1b92ab6.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "medium"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/medium/001.png"
+      ],
+      "content_sha256": "7c41dfa25c16fcb1d1a7c444757c393795b5f1fa880442ab12d2b3c5962743be",
+      "ai_detector_score": 62,
+      "difficulty_from_detector": "medium",
+      "bucket_relative_path": "assets/medium/c003a722-0812-4d60-9a4f-32adc1b92ab6.png"
+    },
+    {
+      "uid": "7970868c-dac9-4cef-a261-2c0b8e431e99",
+      "filename": "7970868c-dac9-4cef-a261-2c0b8e431e99.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/7970868c-dac9-4cef-a261-2c0b8e431e99.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "medium"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/medium/002.png"
+      ],
+      "content_sha256": "729f0e9e31184141732f9bd64e2dd21f934bdbd53ae30be510effdee4f98bfb6",
+      "ai_detector_score": 62,
+      "difficulty_from_detector": "medium",
+      "bucket_relative_path": "assets/medium/7970868c-dac9-4cef-a261-2c0b8e431e99.png"
+    },
+    {
+      "uid": "6e34da14-ebe0-4d37-8f6a-402d081ed665",
+      "filename": "6e34da14-ebe0-4d37-8f6a-402d081ed665.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/6e34da14-ebe0-4d37-8f6a-402d081ed665.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "medium"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/medium/003.png"
+      ],
+      "content_sha256": "2874efec95c808b3174265fd0b954afb4604b502247f4213ad668b0e8fb9b2cc",
+      "ai_detector_score": 62,
+      "difficulty_from_detector": "medium",
+      "bucket_relative_path": "assets/medium/6e34da14-ebe0-4d37-8f6a-402d081ed665.png"
+    },
+    {
+      "uid": "ca8b2687-10a8-44d8-a0ec-e6a440a75c22",
+      "filename": "ca8b2687-10a8-44d8-a0ec-e6a440a75c22.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/ca8b2687-10a8-44d8-a0ec-e6a440a75c22.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "medium"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/medium/004.png"
+      ],
+      "content_sha256": "e4c503dd04d4876fb302af31bd12ef03ec629e1a0e8e9ecff76c40275eadaf88",
+      "ai_detector_score": 62,
+      "difficulty_from_detector": "medium",
+      "bucket_relative_path": "assets/medium/ca8b2687-10a8-44d8-a0ec-e6a440a75c22.png"
+    },
+    {
+      "uid": "2ac5f9f1-21b1-4b6e-8d6e-a3ec6406652e",
+      "filename": "2ac5f9f1-21b1-4b6e-8d6e-a3ec6406652e.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/2ac5f9f1-21b1-4b6e-8d6e-a3ec6406652e.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "medium"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/medium/005.png"
+      ],
+      "content_sha256": "e3cff444424839fba64d856d84804e1058d1bee43cdb50ba0cb2ac958eccb508",
+      "ai_detector_score": 62,
+      "difficulty_from_detector": "medium",
+      "bucket_relative_path": "assets/medium/2ac5f9f1-21b1-4b6e-8d6e-a3ec6406652e.png"
+    },
+    {
+      "uid": "a6254230-42ed-4fff-a89d-88787c1b25c7",
+      "filename": "a6254230-42ed-4fff-a89d-88787c1b25c7.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/a6254230-42ed-4fff-a89d-88787c1b25c7.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "medium"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/medium/006.png"
+      ],
+      "content_sha256": "ea15451365edae075f30a200b6e0652731bd675817e780440979b187c49c0e74",
+      "ai_detector_score": 62,
+      "difficulty_from_detector": "medium",
+      "bucket_relative_path": "assets/medium/a6254230-42ed-4fff-a89d-88787c1b25c7.png"
+    },
+    {
+      "uid": "1eae0835-9598-41f7-926d-fa523f1be67e",
+      "filename": "1eae0835-9598-41f7-926d-fa523f1be67e.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/1eae0835-9598-41f7-926d-fa523f1be67e.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "medium"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/medium/007.png"
+      ],
+      "content_sha256": "7ab524ed7f0d8487e401730680d1418f09c5699ed88c08b150924fb2ca705b5d",
+      "ai_detector_score": 62,
+      "difficulty_from_detector": "medium",
+      "bucket_relative_path": "assets/medium/1eae0835-9598-41f7-926d-fa523f1be67e.png"
+    },
+    {
+      "uid": "2632edb8-23b9-4fde-b21d-18a5f01968fc",
+      "filename": "2632edb8-23b9-4fde-b21d-18a5f01968fc.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/2632edb8-23b9-4fde-b21d-18a5f01968fc.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "hard"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/hard/001.png"
+      ],
+      "content_sha256": "f092a09733a52e50bf8c90542d27c048b849d921b5579b5bff87b0a65fb2a459",
+      "ai_detector_score": 38,
+      "difficulty_from_detector": "hard",
+      "bucket_relative_path": "assets/hard/2632edb8-23b9-4fde-b21d-18a5f01968fc.png"
+    },
+    {
+      "uid": "8ee74680-8488-479d-b9c0-d5164d9d778f",
+      "filename": "8ee74680-8488-479d-b9c0-d5164d9d778f.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/8ee74680-8488-479d-b9c0-d5164d9d778f.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "hard"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/hard/002.png"
+      ],
+      "content_sha256": "70fd566dc758db1d4fb8356cbd801873ac627e56480e8018dd01fa791225e704",
+      "ai_detector_score": 38,
+      "difficulty_from_detector": "hard",
+      "bucket_relative_path": "assets/hard/8ee74680-8488-479d-b9c0-d5164d9d778f.png"
+    },
+    {
+      "uid": "ba4ac275-c0cf-42b3-a542-db20d6495572",
+      "filename": "ba4ac275-c0cf-42b3-a542-db20d6495572.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/ba4ac275-c0cf-42b3-a542-db20d6495572.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "hard"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/hard/003.png"
+      ],
+      "content_sha256": "e6ac00f5b28c59960d9fa75471565b2437fc93942c1a864621f7b3c1ca6fc05f",
+      "ai_detector_score": 38,
+      "difficulty_from_detector": "hard",
+      "bucket_relative_path": "assets/hard/ba4ac275-c0cf-42b3-a542-db20d6495572.png"
+    },
+    {
+      "uid": "a3e36a52-cdba-4dbd-8a0e-3c8bacd73cb5",
+      "filename": "a3e36a52-cdba-4dbd-8a0e-3c8bacd73cb5.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/a3e36a52-cdba-4dbd-8a0e-3c8bacd73cb5.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "hard"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/hard/004.png"
+      ],
+      "content_sha256": "5f40bd93205d7b22c659f274034d4de9a22b5247d4f81fedd61f751b887a60b0",
+      "ai_detector_score": 38,
+      "difficulty_from_detector": "hard",
+      "bucket_relative_path": "assets/hard/a3e36a52-cdba-4dbd-8a0e-3c8bacd73cb5.png"
+    },
+    {
+      "uid": "c017318f-9088-4ee6-ae0c-50fba0d89e79",
+      "filename": "c017318f-9088-4ee6-ae0c-50fba0d89e79.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/c017318f-9088-4ee6-ae0c-50fba0d89e79.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "hard"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/hard/005.png"
+      ],
+      "content_sha256": "c3fd8a86df30d3cb1d48e837a7ee62bb965810a000158fbeaa74de95459941a4",
+      "ai_detector_score": 38,
+      "difficulty_from_detector": "hard",
+      "bucket_relative_path": "assets/hard/c017318f-9088-4ee6-ae0c-50fba0d89e79.png"
+    },
+    {
+      "uid": "4632913c-c35f-4d92-94bb-a77443f7ccf6",
+      "filename": "4632913c-c35f-4d92-94bb-a77443f7ccf6.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/4632913c-c35f-4d92-94bb-a77443f7ccf6.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "hard"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/hard/006.png"
+      ],
+      "content_sha256": "e4af4e2ccf559d6222a6c6829031c6c6dda84d65dee4c3eb0bc429659db86ac4",
+      "ai_detector_score": 38,
+      "difficulty_from_detector": "hard",
+      "bucket_relative_path": "assets/hard/4632913c-c35f-4d92-94bb-a77443f7ccf6.png"
+    },
+    {
+      "uid": "79d7e1d7-a4fb-4fba-a622-b881f25561bb",
+      "filename": "79d7e1d7-a4fb-4fba-a622-b881f25561bb.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/79d7e1d7-a4fb-4fba-a622-b881f25561bb.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "hard"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/hard/007.png"
+      ],
+      "content_sha256": "d0ab3cc7b1e6d869415ca2b59e8b0501ba36f405360d28d490d74edbbf982e13",
+      "ai_detector_score": 38,
+      "difficulty_from_detector": "hard",
+      "bucket_relative_path": "assets/hard/79d7e1d7-a4fb-4fba-a622-b881f25561bb.png"
+    },
+    {
+      "uid": "ec68e606-9b1d-4232-8f7e-c54a006049ab",
+      "filename": "ec68e606-9b1d-4232-8f7e-c54a006049ab.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/ec68e606-9b1d-4232-8f7e-c54a006049ab.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "extreme"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/extreme/001.png"
+      ],
+      "content_sha256": "2233a87606bc26aae28cd0585692e1245b45ffa8d7dc60c97cf3a554bc2b4b2f",
+      "ai_detector_score": 18,
+      "difficulty_from_detector": "extreme",
+      "bucket_relative_path": "assets/extreme/ec68e606-9b1d-4232-8f7e-c54a006049ab.png"
+    },
+    {
+      "uid": "90bb5726-01f8-44cc-977d-d28134e05dc5",
+      "filename": "90bb5726-01f8-44cc-977d-d28134e05dc5.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/90bb5726-01f8-44cc-977d-d28134e05dc5.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "extreme"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/extreme/002.png"
+      ],
+      "content_sha256": "a731d0d8de0d2bae7d41863b014de4e2144e226f97ac823cae8c51d040f8091f",
+      "ai_detector_score": 18,
+      "difficulty_from_detector": "extreme",
+      "bucket_relative_path": "assets/extreme/90bb5726-01f8-44cc-977d-d28134e05dc5.png"
+    },
+    {
+      "uid": "1829d156-923c-4a51-9ee7-aa7c91d6b8c7",
+      "filename": "1829d156-923c-4a51-9ee7-aa7c91d6b8c7.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/1829d156-923c-4a51-9ee7-aa7c91d6b8c7.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "extreme"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/extreme/003.png"
+      ],
+      "content_sha256": "0a6eea53a7582e2563a1ef92010561fa8ae0a611be731ebd46181c016a617fa3",
+      "ai_detector_score": 18,
+      "difficulty_from_detector": "extreme",
+      "bucket_relative_path": "assets/extreme/1829d156-923c-4a51-9ee7-aa7c91d6b8c7.png"
+    },
+    {
+      "uid": "a4e21151-e5d6-4907-89a3-ab5419f66988",
+      "filename": "a4e21151-e5d6-4907-89a3-ab5419f66988.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/a4e21151-e5d6-4907-89a3-ab5419f66988.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "extreme"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/extreme/004.png"
+      ],
+      "content_sha256": "752d969e5ed614d4c08bbddd6827156011e5cfdfa5442ae9f850f704aca2f6b5",
+      "ai_detector_score": 18,
+      "difficulty_from_detector": "extreme",
+      "bucket_relative_path": "assets/extreme/a4e21151-e5d6-4907-89a3-ab5419f66988.png"
+    },
+    {
+      "uid": "fbb76808-f7e0-4a40-af18-ee6d05cdf11f",
+      "filename": "fbb76808-f7e0-4a40-af18-ee6d05cdf11f.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/fbb76808-f7e0-4a40-af18-ee6d05cdf11f.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "extreme"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/extreme/005.png"
+      ],
+      "content_sha256": "e6d5b3302ca605f6739c2dcff8731aea364be83556c4b518d6cfe2395c7fbd15",
+      "ai_detector_score": 18,
+      "difficulty_from_detector": "extreme",
+      "bucket_relative_path": "assets/extreme/fbb76808-f7e0-4a40-af18-ee6d05cdf11f.png"
+    },
+    {
+      "uid": "4f1615b6-4e7c-43a5-994e-d262a8fecd0c",
+      "filename": "4f1615b6-4e7c-43a5-994e-d262a8fecd0c.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/4f1615b6-4e7c-43a5-994e-d262a8fecd0c.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "extreme"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/extreme/006.png"
+      ],
+      "content_sha256": "6729fb3c0ea30e0c03f059e6cf5311e6994761ea6e1d23ae5975fd31b7c5cb60",
+      "ai_detector_score": 18,
+      "difficulty_from_detector": "extreme",
+      "bucket_relative_path": "assets/extreme/4f1615b6-4e7c-43a5-994e-d262a8fecd0c.png"
+    },
+    {
+      "uid": "4c1297b7-a4ed-4cf9-9a56-368b3ae4bc19",
+      "filename": "4c1297b7-a4ed-4cf9-9a56-368b3ae4bc19.png",
+      "absolute_path": "/Users/nunopesikin/WeChatProjects/miniprogram-1/assets/all_generated_images/4c1297b7-a4ed-4cf9-9a56-368b3ae4bc19.png",
+      "category": "skyline",
+      "assets_pool_tiers": [
+        "extreme"
+      ],
+      "is_cropped_800x800": true,
+      "width": 800,
+      "height": 800,
+      "generator_model": "gpt-image-2-plus",
+      "sources": [
+        "/Users/nunopesikin/WeChatProjects/miniprogram-1/tools/gptsapi-gen-images/skyline_output/extreme/007.png"
+      ],
+      "content_sha256": "faf3b3000c1fa8c253fe23dc0192026f3262dc24506c4467cf535d7d486631b7",
+      "ai_detector_score": 18,
+      "difficulty_from_detector": "extreme",
+      "bucket_relative_path": "assets/extreme/4c1297b7-a4ed-4cf9-9a56-368b3ae4bc19.png"
     }
   ],
   "cropped_to_800_at": "2026-05-12T13:08:45",
